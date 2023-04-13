@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div>
+    <canvas id="myChart"></canvas>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <script>
+    const ctx = document.getElementById('myChart');
+  
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: [{% for item in qs %}'{{item.nombre}}',{% endfor %}],
+        datasets: [{
+          label: '# of Votes',
+          data: [{% for item in qs %}'{{item.puntuacion_media}}',{% endfor %}],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script>
+  <div>
+    {% for i in qs %}
+      <p> Nombre Usuario: {{ i.nombre }} - Puntuacion Media: {{i.puntuacion_media}}</p>
+    {% endfor %}
+  </div>
+</body>
+</html>
